@@ -16,7 +16,7 @@ use warnings;
 use Plucene::Simple;
 
 use File::Path;
-use Test::More tests => 6;
+use Test::More tests => 8;
 use Time::Piece;
 
 use constant DIRECTORY => "/tmp/testindex/$$";
@@ -65,9 +65,17 @@ sub data {
 	is_deeply \@docs, ["dbi"], "The correct one";
 }
 
+{    # search the index between 1997 - 1998 (dates passed in different order)
+	my $plucy = Plucene::Simple->open(DIRECTORY);
+	my @docs = $plucy->search_during("name:perl", "1998-12-25", "1997-01-01");
+	is @docs, 1, "1 result for Perl between 1997 and 1998";
+	is_deeply \@docs, ["dbi"], "The correct one";
+}
+
 {    # search the index between post 1998
 	my $plucy = Plucene::Simple->open(DIRECTORY);
 	my @docs  =
 		$plucy->search_during("name:perl", "1998-12-25", Time::Piece->new->ymd);
 	is @docs, 0, "No results for Perl between 1998 and now";
 }
+

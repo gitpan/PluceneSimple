@@ -1,6 +1,9 @@
 Build.PL
+Changes
 MANIFEST			This list of files
+META.yml
 Makefile.PL
+PluceneSimple-1.0.tar.gz
 lib/Plucene/Simple.pm
 t/datesearch.t
 t/index1.t

@@ -119,7 +119,7 @@ further details.
 
 =head2 search_during
 
-	my @results = $lucy->search_during($search_string, $start_date, $end_date);
+	my @results = $lucy->search_during($search_string, $date1, $date2);
 	my @results = $lucy->search_during("to:Fred", "2001-01-01" => "2003-12-31");
 
 If your documents were given an ISO 'date' field when indexing,
@@ -131,7 +131,7 @@ specified dates. Any document without a 'date' field will be ignored.
 use strict;
 use warnings;
 
-our $VERSION = '1.0';
+our $VERSION = '1.01';
 
 use Plucene::Analysis::SimpleAnalyzer;
 use Plucene::Analysis::WhitespaceAnalyzer;
@@ -148,6 +148,7 @@ use Plucene::Search::IndexSearcher;
 use Carp;
 use File::Spec::Functions qw(catfile);
 use Time::Piece;
+use Time::Piece::Range;
 
 sub open {
 	my ($class, $dir) = @_;
@@ -186,12 +187,15 @@ sub search {
 }
 
 sub search_during {
-	my ($self, $sstring, $from, $to) = @_;
+	my ($self, $sstring, $date1, $date2) = @_;
 	return () unless $sstring;
+	my $range = Time::Piece::Range->new(
+		Time::Piece->strptime($date1, "%Y-%m-%d"),
+		Time::Piece->strptime($date2, "%Y-%m-%d"));
 	my $filter = Plucene::Search::DateFilter->new({
 			field => '_date_',
-			from  => Time::Piece->strptime($from, "%Y-%m-%d"),
-			to    => Time::Piece->strptime($to, "%Y-%m-%d"),
+			from  => $range->start,
+			to    => $range->end,
 		});
 	my $qp = Plucene::QueryParser->new({
 			analyzer => Plucene::Analysis::WhitespaceAnalyzer->new(),

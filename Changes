@@ -1,0 +1,7 @@
+1.01 - Fri Feb 06 2004
+
+	* search_during takes dates in any order. (Thanks to Simon Wistow for the idea!)
+
+1.0 - Mon Feb 02 2004
+
+	* Initial release to CPAN
