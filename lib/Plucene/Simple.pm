@@ -30,6 +30,9 @@ Plucene::Simple - An interface to Plucene
 	# remove something from the index
 	$plucy->delete_document($id);
 
+	# is something in the index?
+	if ($plucy->indexed($id) { ... }
+	
 =head1 DESCRIPTION
 
 This provides a simple interface to L<Plucene>. Plucene is large and
@@ -126,12 +129,18 @@ If your documents were given an ISO 'date' field when indexing,
 search_during() will restrict the results to all documents between the
 specified dates. Any document without a 'date' field will be ignored.
 
+=head2 indexed
+
+	if ($plucy->indexed($id) { ... }
+
+This returns true if there is a document with the given ID in the index.
+
 =cut
 
 use strict;
 use warnings;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 use Plucene::Analysis::SimpleAnalyzer;
 use Plucene::Analysis::WhitespaceAnalyzer;
@@ -262,6 +271,12 @@ sub delete_document {
 }
 
 sub optimize { shift->_writer->optimize() }
+
+sub indexed {
+	my ($self, $id) = @_;
+	my $term = Plucene::Index::Term->new({ field => 'id', text => $id });
+	return $self->_reader->doc_freq($term);
+}
 
 =head1 COPYRIGHT
 
