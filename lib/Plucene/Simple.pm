@@ -140,7 +140,7 @@ This returns true if there is a document with the given ID in the index.
 use strict;
 use warnings;
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 
 use Plucene::Analysis::SimpleAnalyzer;
 use Plucene::Analysis::WhitespaceAnalyzer;

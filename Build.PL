@@ -16,7 +16,7 @@ Module::Build->new(
 		'File::Spec::Functions' => '1.2',
 		'Time::Piece'           => '1.08',
 		'Time::Piece::Range'    => '1.0',
-		'Plucene'               => '1.0',
+		'Plucene'               => '1.09',
 	},
 	build_requires => {
 		'File::Find::Rule' => '0.10',

@@ -5,6 +5,7 @@ META.yml
 Makefile.PL
 lib/Plucene/Simple.pm
 t/datesearch.t
+t/docids.t
 t/index1.t
 t/indexdeleter.t
 t/multiple_fields.t
