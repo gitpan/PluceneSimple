@@ -52,5 +52,5 @@ $plucy = Plucene::Simple->open(DIR);
 {
 	my @ids = $plucy->search("ishmael");
 	is scalar @ids => 2, "Two results for 'ishmael'...";
-	is_deeply \@ids, [ 1, "Moby Dick Chapter 1" ], "...the correct ones";
+	is_deeply \@ids, [ "Moby Dick Chapter 1", 1 ], "...the correct ones";
 }

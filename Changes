@@ -1,3 +1,6 @@
+1.02 - Tue Feb 16 2004
+	* results are now sorted by score
+
 1.01 - Fri Feb 06 2004
 
 	* search_during takes dates in any order. (Thanks to Simon Wistow for the idea!)

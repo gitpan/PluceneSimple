@@ -131,7 +131,7 @@ specified dates. Any document without a 'date' field will be ignored.
 use strict;
 use warnings;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 use Plucene::Analysis::SimpleAnalyzer;
 use Plucene::Analysis::WhitespaceAnalyzer;
@@ -180,10 +180,10 @@ sub search {
 		collect => sub {
 			my ($self, $doc, $score) = @_;
 			my $res = eval { $searcher->doc($doc) };
-			push @docs, $res if $res;
+			push @docs, [ $res, $score ] if $res;
 		});
 	$searcher->search_hc($self->_parsed_query($sstring, 'text'), $hc);
-	return map $_->get("id")->string, @docs;
+	return map $_->[0]->get("id")->string, sort { $b->[1] <=> $a->[1] } @docs;
 }
 
 sub search_during {
